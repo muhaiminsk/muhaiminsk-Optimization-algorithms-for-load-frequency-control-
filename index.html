@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Prevent Cloudflare email obfuscation -->
+<meta name="email-obfuscation" content="disabled">
+<title>Sheikh Samit Muhaimin — AI & Security Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090f;
+    --surface: #0d1117;
+    --surface2: #141a24;
+    --border: rgba(255,255,255,0.07);
+    --accent: #4af4c8;
+    --accent2: #7b8cff;
+    --accent3: #f4a24a;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --heading: #f0f4ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(74,244,200,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,244,200,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(7,9,15,0.8);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--heading);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+    transform-origin: left;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  section { position: relative; z-index: 1; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-photo-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .hero-photo {
+    width: 240px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 4px;
+    display: block;
+    filter: grayscale(15%);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .hero-photo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: 1px solid rgba(74,244,200,0.2);
+    border-radius: 6px;
+    z-index: -1;
+  }
+
+  .hero-photo-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: -12px;
+    right: 12px;
+    top: 12px;
+    background: rgba(74,244,200,0.04);
+    border: 1px solid rgba(74,244,200,0.1);
+    border-radius: 4px;
+    z-index: -2;
+  }
+
+  /* CONFERENCE GALLERY */
+  .conf-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 0;
+  }
+
+  .conf-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .conf-card:hover {
+    border-color: rgba(74,244,200,0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+
+  .conf-img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.92);
+    transition: filter 0.3s;
+  }
+
+  .conf-card:hover .conf-img { filter: brightness(1); }
+
+  .conf-caption {
+    padding: 16px 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .conf-caption-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--heading);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .conf-caption-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,244,200,0.08) 0%, transparent 70%);
+    top: 50%; left: 60%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(123,140,255,0.06) 0%, transparent 70%);
+    top: 20%; left: 10%;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    border: 1px solid rgba(74,244,200,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(74,244,200,0.05);
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 6.5vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    color: var(--heading);
+    margin-bottom: 16px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-name em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .hero-title {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-title strong { color: var(--text); font-weight: 500; }
+
+  .hero-desc {
+    max-width: 540px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text);
+    opacity: 0.75;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: #07090f; }
+  .btn-primary:hover { background: #6affdb; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74,244,200,0.25); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); transform: translateY(-2px); }
+
+  .hero-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 48px;
+    animation: fadeUp 0.8s ease 0.6s both;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .hero-links a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .hero-links a:hover { color: var(--accent); }
+  .hero-links .sep { width: 1px; height: 16px; background: var(--border); }
+
+  /* SECTION */
+  .section-header { margin-bottom: 56px; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--heading);
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+  }
+  .section-title em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  /* ABOUT */
+  #about { padding: 120px 0; border-top: 1px solid var(--border); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-text p { color: var(--text); opacity: 0.8; margin-bottom: 20px; font-size: 1.02rem; line-height: 1.85; }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .stat-card:hover { border-color: rgba(74,244,200,0.2); transform: translateY(-3px); }
+  .stat-card:hover::before { transform: scaleX(1); }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.6rem; color: var(--accent); letter-spacing: 0.01em; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 0.82rem; color: var(--muted); font-weight: 400; }
+
+  /* RESEARCH */
+  #research { padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .research-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .research-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(74,244,200,0.04), transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .research-card:hover { border-color: rgba(74,244,200,0.2); transform: translateY(-3px); }
+  .research-card:hover::after { opacity: 1; }
+  .research-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: rgba(74,244,200,0.5); letter-spacing: 0.1em; margin-bottom: 16px; }
+  .research-title { font-family: 'EB Garamond', serif; font-weight: 600; font-size: 1.12rem; color: var(--heading); margin-bottom: 12px; line-height: 1.35; }
+  .research-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; padding: 4px 10px; border-radius: 3px; border: 1px solid; letter-spacing: 0.03em; }
+  .tag-teal { color: var(--accent); border-color: rgba(74,244,200,0.25); background: rgba(74,244,200,0.06); }
+  .tag-blue { color: var(--accent2); border-color: rgba(123,140,255,0.25); background: rgba(123,140,255,0.06); }
+  .tag-orange { color: var(--accent3); border-color: rgba(244,162,74,0.25); background: rgba(244,162,74,0.06); }
+  .research-result { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--accent); display: flex; align-items: center; gap: 6px; }
+  .research-result::before { content: '→'; font-size: 0.8rem; }
+
+  /* PUBLICATIONS */
+  #publications { padding: 120px 0; border-top: 1px solid var(--border); }
+  .pub-list { display: flex; flex-direction: column; }
+  .pub-item { display: grid; grid-template-columns: 52px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); position: relative; }
+  .pub-item::before {
+    content: '';
+    position: absolute;
+    left: -40px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+  }
+  .pub-item:hover::before { transform: scaleY(1); }
+  .pub-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); padding-top: 4px; letter-spacing: 0.05em; }
+  .pub-title { font-family: 'EB Garamond', serif; font-weight: 600; font-size: 1.05rem; color: var(--heading); margin-bottom: 6px; line-height: 1.45; }
+  .pub-authors { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .pub-authors strong { color: var(--text); }
+  .pub-venue { font-size: 0.83rem; color: var(--accent2); font-style: italic; margin-bottom: 10px; }
+  .pub-doi { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  .pub-presented { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--accent3); margin-top: 8px; font-style: italic; }
+  .pub-link { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(240,244,255,0.15); transition: border-color 0.2s, color 0.2s; }
+  .pub-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* EXPERIENCE */
+  #experience { padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); }
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); }
+  .timeline-item { position: relative; margin-bottom: 48px; opacity: 1; transform: translateX(0); transition: all 0.5s; }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot { position: absolute; left: -38px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--accent); }
+  .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+  .timeline-role { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.2rem; color: var(--heading); }
+  .timeline-period { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); background: var(--bg); padding: 4px 10px; border-radius: 3px; border: 1px solid var(--border); white-space: nowrap; }
+  .timeline-org { font-size: 0.9rem; color: var(--accent); margin-bottom: 16px; }
+  .timeline-points { list-style: none; }
+  .timeline-points li { font-size: 0.9rem; color: var(--muted); padding: 5px 0; padding-left: 18px; position: relative; line-height: 1.6; }
+  .timeline-points li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; top: 7px; }
+
+  /* SKILLS */
+  #skills { padding: 120px 0; border-top: 1px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .skill-category { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px; transition: all 0.3s; }
+  .skill-category:hover { border-color: rgba(74,244,200,0.2); }
+  .skill-cat-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .skill-cat-icon { font-size: 0.9rem; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-chip { font-size: 0.8rem; padding: 5px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; color: var(--text); opacity: 0.8; transition: all 0.2s; }
+  .skill-chip:hover { border-color: rgba(74,244,200,0.3); color: var(--accent); opacity: 1; }
+
+  /* EDUCATION */
+  #education { padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); }
+  .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .edu-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 32px; position: relative; overflow: hidden; transition: all 0.3s; }
+  .edu-card:first-child { border-color: rgba(74,244,200,0.2); }
+  .edu-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transform: scaleX(0); transition: transform 0.4s; transform-origin: left; }
+  .edu-card:hover { transform: translateY(-4px); }
+  .edu-card:hover::before { transform: scaleX(1); }
+  .edu-degree { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .edu-field { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.15rem; color: var(--heading); margin-bottom: 8px; line-height: 1.3; }
+  .edu-institution { font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
+  .edu-meta { display: flex; flex-direction: column; gap: 8px; }
+  .edu-meta span { font-size: 0.82rem; color: var(--muted); }
+  .edu-meta span em { font-style: normal; color: var(--text); opacity: 0.8; }
+
+  /* CONTACT */
+  #contact { padding: 120px 0 160px; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+  #contact::before { content: ''; position: absolute; width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(74,244,200,0.05) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+  .contact-inner { text-align: center; position: relative; }
+  .contact-title { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.8rem); color: var(--heading); letter-spacing: 0.01em; margin-bottom: 16px; }
+  .contact-sub { font-size: 1.05rem; color: var(--muted); margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 60px; }
+  .contact-link { display: flex; align-items: center; gap: 10px; padding: 14px 24px; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text); font-size: 0.9rem; transition: all 0.25s; background: var(--surface); }
+  .contact-link:hover { border-color: rgba(74,244,200,0.3); color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .contact-link svg { width: 18px; height: 18px; opacity: 0.7; transition: opacity 0.2s; }
+  .contact-link:hover svg { opacity: 1; }
+
+  footer { padding: 24px 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+  footer p { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.hidden { opacity: 0; transform: translateY(32px); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  .scroll-indicator { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); z-index: 200; transition: width 0.1s; }
+
+  .cursor-glow { position: fixed; width: 300px; height: 300px; background: radial-gradient(circle, rgba(74,244,200,0.04), transparent 70%); pointer-events: none; z-index: 2; transform: translate(-50%, -50%); transition: left 0.15s, top 0.15s; border-radius: 50%; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .container { padding: 0 20px; }
+    #hero { padding: 100px 0 60px; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-photo-wrap { display: none; }
+    .about-grid, .research-grid, .skills-grid, .edu-grid { grid-template-columns: 1fr; gap: 24px; }
+    .conf-gallery { grid-template-columns: 1fr; }
+    .hero-links { flex-direction: column; gap: 12px; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="scroll-indicator" id="scrollBar"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">S<span>.</span>Muhaimin</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#past-projects">Past Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#presentations">Presentations</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-tag">PhD Researcher · University of Notre Dame</div>
+        <h1 class="hero-name">Sheikh Samit<br><em>Muhaimin</em></h1>
+        <p class="hero-title">Ph.D. Candidate in <strong>Computer Science &amp; Engineering</strong> · University of Notre Dame</p>
+        <p class="hero-desc">I research AI security, LLM defense, and privacy-preserving intelligent systems. Previously a Service Operations Engineer at bKash Limited, Bangladesh's largest fintech company. My work spans adversarial machine learning, network traffic analysis, and Riemannian geometry-based privacy for brain-computer interfaces.</p>
+        <div class="hero-actions">
+          <a href="#research" class="btn btn-primary">View Research →</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+        <div class="hero-links">
+          <a id="hero-email-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+            <span id="hero-email-text"></span>
+          </a>
+          <div class="sep"></div>
+          <a href="https://scholar.google.com/citations?user=oKWIL8IAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
+          <div class="sep"></div>
+          <a href="https://github.com/muhaiminsk" target="_blank">GitHub</a>
+          <div class="sep"></div>
+          <a href="https://orcid.org/0000-0002-7055-9024" target="_blank">ORCID: 0000-0002-7055-9024</a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <img src="profile.jpg" alt="Sheikh Samit Muhaimin" class="hero-photo">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Securing AI in an<br><em>adversarial world</em></h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I am a Ph.D. candidate in Computer Science and Engineering at the <strong>University of Notre Dame</strong>, Indiana, USA. My dissertation focuses on <strong>learning trustworthiness from contextual metadata</strong> to build secure and privacy-preserving intelligent systems.</p>
+        <p>My research spans <strong>AI security</strong>, <strong>LLM defense</strong>, network traffic analysis for VR environments, source reputation modeling for RAG systems, and Riemannian geometry-based privacy preservation for EEG brain-computer interfaces. You can find my publications on my <a href="https://scholar.google.com/citations?user=oKWIL8IAAAAJ&hl=en" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom: 1px solid rgba(74,244,200,0.3);">Google Scholar profile</a>.</p>
+        <p>I completed my <strong>Master of Science</strong> in Computer Science and Engineering at the University of Notre Dame in August 2025. Prior to that, I earned my <strong>Bachelor of Science</strong> in Electrical and Electronic Engineering from the Islamic University of Technology (IUT) in May 2022, where I conducted undergraduate research on intelligent control systems under the supervision of my thesis advisor.</p>
+        <p>Before joining Notre Dame, I worked as a <strong>Service Operations Engineer at bKash Limited</strong>, Bangladesh's largest fintech company, where I monitored mission-critical operations, applied software QA methodologies, and operated AWS infrastructure at scale.</p>
+      </div>
+      <div class="about-stats reveal reveal-delay-1">
+        <div class="stat-card" onclick="document.getElementById('publications').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Published Papers</div>
+        </div>
+        <div class="stat-card" onclick="document.getElementById('research').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Active Research Projects</div>
+        </div>
+        <div class="stat-card" onclick="document.getElementById('presentations').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <div class="stat-num">2</div>
+          <div class="stat-label">IEEE Conference Presentations</div>
+        </div>
+        <div class="stat-card" onclick="document.getElementById('service').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Peer Reviews (IEEE)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Research Projects</p>
+      <h2 class="section-title">Current <em>work</em></h2>
+    </div>
+    <div class="research-grid">
+
+      <div class="research-card reveal">
+        <div class="research-num">PROJECT 01</div>
+        <h3 class="research-title">LLM Security via In-Context Learning from Adversarial Literature</h3>
+        <p class="research-desc">Automated defense pipeline against jailbreak and prompt-injection attacks without model retraining. Incorporates adversarial research with parallelized NLP-based summarization to dynamically adapt LLM responses.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">LLM Security</span>
+          <span class="tag tag-blue">In-Context Learning</span>
+          <span class="tag tag-orange">NLP</span>
+          <span class="tag tag-teal">LangChain</span>
+          <span class="tag tag-blue">HuggingFace</span>
+        </div>
+        <div class="research-result">Published at IEEE TPS-ISA 2025</div>
+      </div>
+
+      <div class="research-card reveal reveal-delay-1">
+        <div class="research-num">PROJECT 02</div>
+        <h3 class="research-title">VR User Activity Recognition via Network Traffic Analysis</h3>
+        <p class="research-desc">Real-time recognition model classifying VR apps and in-app activities using encrypted network traffic. Wireshark-captured data processed with Random Forest, Decision Tree, and MLP architectures.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">VR Security</span>
+          <span class="tag tag-blue">Network Traffic</span>
+          <span class="tag tag-orange">PyTorch</span>
+          <span class="tag tag-teal">Wireshark</span>
+          <span class="tag tag-blue">Scikit-learn</span>
+        </div>
+        <div class="research-result">Published at IEEE AIoT 2025 · 90%+ accuracy</div>
+      </div>
+
+      <div class="research-card reveal">
+        <div class="research-num">PROJECT 03</div>
+        <h3 class="research-title">LLM Source Ranking System for RAG Pipelines</h3>
+        <p class="research-desc">Ensemble-based framework modeling source reputation and trust in Retrieval-Augmented Generation systems. Uses NLP techniques and metadata analysis to quantify credibility and filter unreliable sources.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">RAG</span>
+          <span class="tag tag-blue">Graph Learning</span>
+          <span class="tag tag-orange">NetworkX</span>
+          <span class="tag tag-teal">Ensemble Methods</span>
+        </div>
+        <div class="research-result">Scalable reputation scoring mechanism</div>
+      </div>
+
+      <div class="research-card reveal reveal-delay-1">
+        <div class="research-num">PROJECT 04</div>
+        <h3 class="research-title">Privacy-Preserving EEG BCI via Riemannian Geometry</h3>
+        <p class="research-desc">Three-stage Riemannian geometry pipeline removing biometric identity from EEG motor imagery. Reduces attacker accuracy from 99.9% to 6.2% — below chance level — with only 1.9pp loss in decoding utility.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">EEG / BCI</span>
+          <span class="tag tag-blue">Riemannian Geometry</span>
+          <span class="tag tag-orange">Privacy</span>
+          <span class="tag tag-teal">PyTorch</span>
+        </div>
+        <div class="research-result">99.9% → 6.2% attacker accuracy</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="past-projects" style="padding: 120px 0; border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Past Projects</p>
+      <h2 class="section-title">Undergraduate <em>research</em></h2>
+    </div>
+    <p class="reveal" style="color:var(--muted); font-size:0.95rem; margin-bottom:40px; max-width:640px;">During my B.Sc. at IUT, I conducted research on intelligent control systems and power engineering — applying optimization algorithms and neural networks to real-world energy systems problems.</p>
+    <div class="research-grid">
+
+      <div class="research-card reveal">
+        <div class="research-num">PAST PROJECT 01</div>
+        <h3 class="research-title">AI-Based Online Control for Interconnected Thermal Power Systems</h3>
+        <p class="research-desc">Designed an artificial intelligence-based online control scheme for regulating interconnected two-area thermal power systems. Applied advanced metaheuristic and ANN-based approaches for real-time load frequency control.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">Power Systems</span>
+          <span class="tag tag-blue">ANN</span>
+          <span class="tag tag-orange">Control Theory</span>
+          <span class="tag tag-teal">MATLAB</span>
+        </div>
+        <div class="research-result"><a href="https://link.springer.com/article/10.1007/s13369-023-07995-3" target="_blank" style="color:inherit; text-decoration:none;">Published · Arabian Journal for Science and Engineering, 2023</a></div>
+      </div>
+
+      <div class="research-card reveal reveal-delay-1">
+        <div class="research-num">PAST PROJECT 02</div>
+        <h3 class="research-title">Gradient-Based Optimized PID Controller for Load Frequency Control</h3>
+        <p class="research-desc">Developed an enhanced gradient-based metaheuristic-optimized controller for load frequency control of a two-area automatic generation control (AGC) system. Benchmarked against conventional PID tuning methods.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">PID Control</span>
+          <span class="tag tag-blue">Metaheuristics</span>
+          <span class="tag tag-orange">AGC</span>
+          <span class="tag tag-teal">MATLAB</span>
+        </div>
+        <div class="research-result"><a href="https://link.springer.com/chapter/10.1007/978-3-031-16832-1_5" target="_blank" style="color:inherit; text-decoration:none;">Published · Engineering Applications of Modern Metaheuristics, 2022</a></div>
+      </div>
+
+      <div class="research-card reveal">
+        <div class="research-num">PAST PROJECT 03</div>
+        <h3 class="research-title">Smart Parking Management System using FSM in VHDL</h3>
+        <p class="research-desc">Designed and implemented an automated vehicle access and exit control system for smart parking using a Finite State Machine (FSM) architecture, fully described and simulated in VHDL.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">VHDL</span>
+          <span class="tag tag-blue">FSM</span>
+          <span class="tag tag-orange">Digital Design</span>
+          <span class="tag tag-blue">Embedded Systems</span>
+        </div>
+        <div class="research-result"><a href="https://ieeexplore.ieee.org/abstract/document/9910305" target="_blank" style="color:inherit; text-decoration:none;">Published · IEEE RI2C 2022</a></div>
+      </div>
+
+      <div class="research-card reveal reveal-delay-1">
+        <div class="research-num">PAST PROJECT 04 · B.Sc. Thesis</div>
+        <h3 class="research-title">PID & Fractional Order PID for Two-Area AGC via Optimization & ANNs</h3>
+        <p class="research-desc">B.Sc. thesis investigating PID and Fractional Order PID controller design for load frequency control of a two-area automatic generation control system, tuned using optimization algorithms and artificial neural networks.</p>
+        <div class="tag-list">
+          <span class="tag tag-teal">FOPID</span>
+          <span class="tag tag-blue">Neural Networks</span>
+          <span class="tag tag-orange">Optimization</span>
+          <span class="tag tag-teal">MATLAB</span>
+        </div>
+        <div class="research-result"><a href="https://repository.iutoic-dhaka.edu/items/e5ba4122-a2d2-4281-a6b6-568f42be4b49" target="_blank" style="color:inherit; text-decoration:none;">IUT Repository · 2022</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Publications</p>
+      <h2 class="section-title">Peer-reviewed <em>research</em></h2>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2025</div>
+        <div class="pub-body">
+          <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11416207" target="_blank" class="pub-link">Learning from Literature: A Retraining-Free Framework for LLM Jailbreak Defense via NLP-Based Adversarial Literature Analysis</a></div>
+          <div class="pub-authors"><strong>SS Muhaimin</strong>, S Mastorakis</div>
+          <div class="pub-venue">IEEE 7th Int'l Conf. on Trust, Privacy and Security in Intelligent Systems, and Applications (TPS-ISA) — Pittsburgh, PA · pp. 270–281</div>
+          <div class="pub-doi">DOI: 10.1109/TPS-ISA67132.2025.00036</div>
+          <div class="pub-presented">✦ Presented by the author at IEEE TPS-ISA 2025, Pittsburgh, PA</div>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2025</div>
+        <div class="pub-body">
+          <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11410405" target="_blank" class="pub-link">Identifying VR User Activity: A Network Traffic Analysis Approach</a></div>
+          <div class="pub-authors"><strong>SS Muhaimin</strong>, S Mastorakis</div>
+          <div class="pub-venue">IEEE Annual Congress on Artificial Intelligence of Things (AIoT) — Osaka, Japan · pp. 548–555</div>
+          <div class="pub-doi">DOI: 10.1109/AIoT66900.2025.00083</div>
+          <div class="pub-presented">✦ Presented by the author at IEEE AIoT 2025, Osaka, Japan</div>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2023</div>
+        <div class="pub-body">
+          <div class="pub-title"><a href="https://link.springer.com/article/10.1007/s13369-023-07995-3" target="_blank" class="pub-link">Artificial intelligence-based online control scheme for the regulations of interconnected thermal power systems</a></div>
+          <div class="pub-authors">NA Orka, <strong>SS Muhaimin</strong>, MNS Shahi, A Ahmed</div>
+          <div class="pub-venue">Arabian Journal for Science and Engineering · 48(11), pp. 15153–15176</div>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2022</div>
+        <div class="pub-body">
+          <div class="pub-title"><a href="https://link.springer.com/chapter/10.1007/978-3-031-16832-1_5" target="_blank" class="pub-link">An enhanced gradient based optimized controller for load frequency control of a two area automatic generation control system</a></div>
+          <div class="pub-authors">NA Orka, <strong>SS Muhaimin</strong>, MNS Shahi, A Ahmed</div>
+          <div class="pub-venue">Engineering Applications of Modern Metaheuristics · pp. 79–107</div>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2022</div>
+        <div class="pub-body">
+          <div class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/9910305" target="_blank" class="pub-link">Automated Vehicle Access and Exit Control: A Smart Parking Management System using Finite State Machine in VHDL</a></div>
+          <div class="pub-authors">MNS Shahi, <strong>SS Muhaimin</strong>, MM Nishat, F Faisal, MSB Motahar</div>
+          <div class="pub-venue">Research, Invention, and Innovation Congress: Innovative Electricals and Electronics (RI2C)</div>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2022</div>
+        <div class="pub-body">
+          <div class="pub-title"><a href="https://repository.iutoic-dhaka.edu/items/e5ba4122-a2d2-4281-a6b6-568f42be4b49" target="_blank" class="pub-link">PID and Fractional Order PID Controller Design for Load Frequency Control of A Two Area Automatic Generation Control System Tuned by Optimization Algorithms and Artificial Neural Networks</a></div>
+          <div class="pub-authors"><strong>SS Muhaimin</strong></div>
+          <div class="pub-venue">B.Sc. Thesis · Islamic University of Technology Repository</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="service" style="padding: 120px 0; border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Academic Service</p>
+      <h2 class="section-title">Peer Review <em>activity</em></h2>
+    </div>
+    <div class="pub-list reveal">
+
+      <div class="pub-item">
+        <div class="pub-year" style="padding-top:2px; font-size:0.7rem;">2024</div>
+        <div class="pub-body">
+          <div class="pub-title" style="font-size:0.98rem;">IEEE International Conference on Advanced Networks and Telecommunication Systems (ANTS)</div>
+          <div class="pub-authors" style="margin-bottom:6px;">Role: <strong>Reviewer</strong> · 1 paper reviewed</div>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <span class="tag tag-teal">Conference</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--muted);">ISSN: 2329-7077</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--muted);">ID: 1pT6Hs1e · Clarivate / Web of Science</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-year" style="padding-top:2px; font-size:0.7rem;">2024</div>
+        <div class="pub-body">
+          <div class="pub-title" style="font-size:0.98rem;">IEEE Internet of Things Journal</div>
+          <div class="pub-authors" style="margin-bottom:6px;">Role: <strong>Reviewer</strong> · 2 papers reviewed</div>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <span class="tag tag-blue">Journal</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--muted);">ISSN: 2327-4662</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--muted);">IDs: 8qo5SLby · qCIGJj7s · Clarivate / Web of Science</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 56px;">
+      <p class="section-label" style="margin-bottom: 32px;">Voluntary Work &amp; Community</p>
+      <div class="pub-list reveal">
+
+        <div class="pub-item">
+          <div class="pub-year" style="padding-top:2px; font-size:0.7rem;">2018</div>
+          <div class="pub-body">
+            <div class="pub-title" style="font-size:0.98rem;">Head of Program — Hult Prize On Campus</div>
+            <div class="pub-authors" style="margin-bottom:8px;">Islamic University of Technology</div>
+            <div class="pub-venue" style="font-style:normal; color:var(--muted); font-size:0.88rem;">Successfully hosted and led the on-campus round of the Hult Prize — one of the world's largest student competitions for social entrepreneurship — coordinating all logistics, participants, and judging.</div>
+            <div style="margin-top:12px;"><span class="tag tag-orange">Leadership</span></div>
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <div class="pub-year" style="padding-top:2px; font-size:0.7rem;">2023–<br>Present</div>
+          <div class="pub-body">
+            <div class="pub-title" style="font-size:0.98rem;">Notre Dame Bangladeshi Student Association</div>
+            <div class="pub-authors" style="margin-bottom:8px;">University of Notre Dame</div>
+            <div class="pub-venue" style="font-style:normal; color:var(--muted); font-size:0.88rem;">Active member contributing to the planning and organization of cultural and social events, fostering community engagement and student networking within the Notre Dame Bangladeshi diaspora community.</div>
+            <div style="margin-top:12px;"><span class="tag tag-teal">Community</span></div>
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <div class="pub-year" style="padding-top:2px; font-size:0.7rem;">2023–<br>Present</div>
+          <div class="pub-body">
+            <div class="pub-title" style="font-size:0.98rem;">Muslim Student Association</div>
+            <div class="pub-authors" style="margin-bottom:8px;">University of Notre Dame</div>
+            <div class="pub-venue" style="font-style:normal; color:var(--muted); font-size:0.88rem;">Contributed to organizing cultural and social events, supporting student well-being and interfaith community engagement on campus.</div>
+            <div style="margin-top:12px;"><span class="tag tag-blue">Community</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="presentations" style="padding: 120px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Conference Presentations</p>
+      <h2 class="section-title">Presented at <em>IEEE conferences</em></h2>
+    </div>
+    <div class="conf-gallery reveal">
+
+      <div class="conf-card">
+        <img src="conf_llm.jpeg" alt="LLM Jailbreak Defense — IEEE TPS-ISA 2025 slide" class="conf-img">
+        <div class="conf-caption">
+          <div class="conf-caption-title">Learning from Literature: A Retraining-Free Framework for LLM Jailbreak Defense</div>
+          <div class="conf-caption-meta">IEEE TPS-ISA 2025 · Pittsburgh, PA, USA</div>
+        </div>
+      </div>
+
+      <div class="conf-card">
+        <img src="conf_vr.jpeg" alt="Presenting VR User Activity Recognition at IEEE AIoT 2025, Osaka" class="conf-img">
+        <div class="conf-caption">
+          <div class="conf-caption-title">Identifying VR User Activity: A Network Traffic Analysis Approach</div>
+          <div class="conf-caption-meta">IEEE AIoT 2025 · Osaka, Japan</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Experience</p>
+      <h2 class="section-title">Professional <em>journey</em></h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <span class="timeline-role">Research Assistant</span>
+          <span class="timeline-period">Aug 2023 — Present</span>
+        </div>
+        <div class="timeline-org">Department of CSE, University of Notre Dame · South Bend, IN</div>
+        <ul class="timeline-points">
+          <li>Designing automated LLM defense pipelines against jailbreak and prompt-injection attacks using NLP and in-context learning</li>
+          <li>Developing real-time VR activity recognition models via encrypted network traffic analysis, achieving 90%+ accuracy</li>
+          <li>Building ensemble-based source reputation scoring frameworks for RAG pipelines using graph learning</li>
+          <li>Designing Riemannian geometry pipelines for privacy-preserving EEG BCI, reducing attacker accuracy from 99.9% to 6.2%</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <span class="timeline-role">Teaching Assistant</span>
+          <span class="timeline-period">Jan 2024 — May 2024</span>
+        </div>
+        <div class="timeline-org">Department of CSE, University of Notre Dame · South Bend, IN</div>
+        <ul class="timeline-points">
+          <li>Conducted office hours and designed/graded assignments for Operating Systems Principles (OS concepts, Unix shell scripting)</li>
+          <li>Developed course materials for Programming Paradigms (OOP and functional programming in Java and Kotlin)</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <span class="timeline-role">Engineer, Service Operations</span>
+          <span class="timeline-period">Jun 2022 — Jul 2023</span>
+        </div>
+        <div class="timeline-org">bKash Limited · Dhaka, Bangladesh</div>
+        <ul class="timeline-points">
+          <li>Monitored daily operations of Bangladesh's largest fintech company within a Scrum framework</li>
+          <li>Implemented Software QA: UAT, Sanity Testing, Regression Testing, and Smoke Testing</li>
+          <li>Reported and tracked app issues via JIRA; responded to user-facing feature problems</li>
+          <li>Operated AWS services: CloudWatch, DynamoDB, Lambda, and S3</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Technical Skills</p>
+      <h2 class="section-title">Tools &amp; <em>expertise</em></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category reveal">
+        <div class="skill-cat-title"><span class="skill-cat-icon">⌨</span> Languages</div>
+        <div class="skill-items">
+          <span class="skill-chip">Python</span><span class="skill-chip">C++</span><span class="skill-chip">C</span><span class="skill-chip">Java</span><span class="skill-chip">Kotlin</span><span class="skill-chip">SQL</span><span class="skill-chip">MATLAB</span><span class="skill-chip">Unix/Shell</span><span class="skill-chip">HTML</span><span class="skill-chip">8086 Assembly</span>
+        </div>
+      </div>
+      <div class="skill-category reveal reveal-delay-1">
+        <div class="skill-cat-title"><span class="skill-cat-icon">🧠</span> ML / AI / LLM</div>
+        <div class="skill-items">
+          <span class="skill-chip">PyTorch</span><span class="skill-chip">TensorFlow</span><span class="skill-chip">Scikit-learn</span><span class="skill-chip">CUDA</span><span class="skill-chip">Hugging Face</span><span class="skill-chip">LangChain</span><span class="skill-chip">BERT</span><span class="skill-chip">Transformers</span><span class="skill-chip">CNN / RNN / GAN</span><span class="skill-chip">NetworkX</span><span class="skill-chip">NumPy</span><span class="skill-chip">Pandas</span>
+        </div>
+      </div>
+      <div class="skill-category reveal reveal-delay-2">
+        <div class="skill-cat-title"><span class="skill-cat-icon">🛠</span> Tools &amp; Platforms</div>
+        <div class="skill-items">
+          <span class="skill-chip">Git</span><span class="skill-chip">AWS</span><span class="skill-chip">Wireshark</span><span class="skill-chip">JIRA</span><span class="skill-chip">VMware</span><span class="skill-chip">LaTeX</span><span class="skill-chip">PSpice</span><span class="skill-chip">Proteus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">Education</p>
+      <h2 class="section-title">Academic <em>background</em></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-degree">PhD · Expected 2027</div>
+        <div class="edu-field">Computer Science &amp; Engineering</div>
+        <div class="edu-institution">University of Notre Dame</div>
+        <div class="edu-meta">
+          <span>Aug 2023 – Present · South Bend, IN</span>
+          <span><em>Dissertation: Learning Trustworthiness from Contextual Metadata to Build Secure and Privacy-Preserving Intelligent Systems</em></span>
+        </div>
+      </div>
+      <div class="edu-card reveal reveal-delay-1">
+        <div class="edu-degree">M.S. · 2025 · GPA 3.917 / 4.0</div>
+        <div class="edu-field">Computer Science &amp; Engineering</div>
+        <div class="edu-institution">University of Notre Dame</div>
+        <div class="edu-meta">
+          <span><em>Algorithms, Computer Vision, Graph Learning, Computer Security, Neural Networks, Advanced Networks, Graduate OS</em></span>
+        </div>
+      </div>
+      <div class="edu-card reveal reveal-delay-2">
+        <div class="edu-degree">B.Sc. · 2022 · GPA 3.78 / 4.0</div>
+        <div class="edu-field">Electrical &amp; Electronic Engineering</div>
+        <div class="edu-institution">Islamic University of Technology</div>
+        <div class="edu-meta">
+          <span>🏆 OIC Scholarship — merit position 82nd</span>
+          <span><em>Thesis: PID &amp; Fractional Order PID for Load Frequency Control via Optimization Algorithms and ANNs</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-label" style="justify-content:center; margin-bottom:20px;">Contact</div>
+      <h2 class="contact-title reveal">Let's connect</h2>
+      <p class="contact-sub reveal">Always open to research collaborations, academic conversations, and new opportunities.</p>
+      <div class="contact-links reveal">
+        <a id="contact-email-link" class="contact-link">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+          <span id="contact-email-text"></span>
+        </a>
+        <a href="https://www.linkedin.com/in/sheikh-samit-muhaimin-857118157/" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://scholar.google.com/citations?user=oKWIL8IAAAAJ&amp;hl=en" target="_blank" class="contact-link">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          Google Scholar
+        </a>
+        <a href="https://github.com/muhaiminsk" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://orcid.org/0000-0002-7055-9024" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.787 5.171a.93.93 0 110 1.86.93.93 0 010-1.86zm-.93 3.354h1.86v10.304h-1.86V8.525zm4.464 0h4.001c3.806 0 5.408 2.721 5.408 5.152 0 2.76-2.153 5.152-5.408 5.152h-4.001V8.525zm1.86 1.652v7h1.956c2.343 0 3.72-1.61 3.72-3.5 0-1.957-1.377-3.5-3.72-3.5h-1.956z"/></svg>
+          ORCID
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Sheikh Samit Muhaimin</p>
+  <p>PhD Candidate · University of Notre Dame · South Bend, IN</p>
+</footer>
+
+<script>
+  // Build email links via JS — prevents Cloudflare from obfuscating them
+  (function() {
+    const u = 'muhaiminsamit';
+    const d = 'gmail.com';
+    const e = u + '@' + d;
+    const m = 'mai' + 'lto:' + e;
+    const heroLink = document.getElementById('hero-email-link');
+    if (heroLink) { heroLink.href = m; }
+    const heroText = document.getElementById('hero-email-text');
+    if (heroText) { heroText.textContent = e; }
+    const contactLink = document.getElementById('contact-email-link');
+    if (contactLink) { contactLink.href = m; }
+    const contactText = document.getElementById('contact-email-text');
+    if (contactText) { contactText.textContent = e; }
+  })();
+
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scrollBar').style.width = pct + '%';
+  });
+
+  // Cursor glow
+  const cursor = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Scroll reveal — add hidden via JS so content always visible without JS
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach(el => el.classList.add('hidden'));
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
